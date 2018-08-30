@@ -1,6 +1,8 @@
 import re
 import requests
-from lxml import html
+from lxml import html, etree
+import traceback
+
 
 ch_dict = {'０':'0', '１':'1', '２':'2','３':'3','４':'4','５':'5','６':'6','７':'7','８':'8','～':'~',
 '９':'9','ａ':'a','Ａ':'A','ｂ':'b','Ｂ':'B','ｃ':'c','Ｃ':'C','ｄ':'d','Ｄ':'D','ｅ':'e','Ｅ':'E',
@@ -61,8 +63,9 @@ class parse_html:
         self.output = ''
         if r.status_code == 200:
             try:
-                self.response = html.fromstring (r.text)
+                self.response = html.fromstring (r.text.encode("raw_unicode_escape").decode("UTF-8"))
             except:
+                print (traceback.format_exc())
                 self.response = None
         else:
             self.response = None
