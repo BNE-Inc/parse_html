@@ -63,10 +63,12 @@ class parse_html:
         self.output = ''
         if r.status_code == 200:
             try:
-                self.response = html.fromstring (r.text.encode("raw_unicode_escape").decode("UTF-8"))
+                self.response = html.fromstring(r.text.encode("raw_unicode_escape").decode("UTF-8"))
             except:
-                print (traceback.format_exc())
-                self.response = None
+                try:
+                    self.response = html.fromstring(r.text)
+                except:
+                    self.response = None
         else:
             self.response = None
 
