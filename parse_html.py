@@ -115,7 +115,3 @@ class parse_html:
 
     def clean_text(self):
         self.output = ''
-
-
-text = parse_html ('https://www.oreilly.co.jp/index.shtml').parse({'title', 'content', 'h1', 'p'}).get_text()
-print (text)
