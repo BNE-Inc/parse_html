@@ -63,12 +63,10 @@ class parse_html:
         self.output = ''
         if r.status_code == 200:
             try:
-                self.response = html.fromstring(r.text.encode("raw_unicode_escape").decode("UTF-8"))
+                r.encoding = r.apparent_encoding
+                self.response = html.fromstring(r.text)
             except:
-                try:
-                    self.response = html.fromstring(r.text)
-                except:
-                    self.response = None
+                self.response = None
         else:
             self.response = None
 
@@ -117,3 +115,7 @@ class parse_html:
 
     def clean_text(self):
         self.output = ''
+
+
+text = parse_html ('https://www.oreilly.co.jp/index.shtml').parse({'title', 'content', 'h1', 'p'}).get_text()
+print (text)
